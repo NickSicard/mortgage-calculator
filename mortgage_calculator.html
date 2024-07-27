@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .calculator {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .calculator input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        .calculator button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .calculator button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <h2>Mortgage Calculator</h2>
+    <label for="amount">Loan Amount ($):</label>
+    <input type="number" id="amount" placeholder="Enter loan amount">
+
+    <label for="interest">Interest Rate (%):</label>
+    <input type="number" step="0.01" id="interest" placeholder="Enter interest rate">
+
+    <label for="years">Term (years):</label>
+    <input type="number" id="years" placeholder="Enter loan term">
+
+    <button onclick="calculateMortgage()">Calculate</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculateMortgage() {
+        const amount = document.getElementById('amount').value;
+        const interest = document.getElementById('interest').value / 100 / 12;
+        const years = document.getElementById('years').value;
+        const payments = years * 12;
+
+        const x = Math.pow(1 + interest, payments);
+        const monthly = (amount * x * interest) / (x - 1);
+
+        const result = document.getElementById('result');
+        if (!isNaN(monthly) && (monthly != Infinity) && (monthly != 0)) {
+            result.innerHTML = `<h3>Monthly Payment: $${monthly.toFixed(2)}</h3>`;
+        } else {
+            result.innerHTML = `<h3>Please fill in all fields with valid numbers.</h3>`;
+        }
+    }
+</script>
+
+</body>
+</html>
